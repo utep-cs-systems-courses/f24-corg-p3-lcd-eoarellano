@@ -12,7 +12,6 @@
 extern int redrawScreen;
 int redrawScreen;
 int state;
-int update_pumpkin;
 
 int main(void)
 {
@@ -24,10 +23,8 @@ int main(void)
 
   enableWDTInterrupts();
   or_sr(0x8);
-  // state = 1;
-  // update_pumpkin = 1;
-  clearScreen(COLOR_BLACK);
-
+  draw_pumpkin(COLOR_ORANGE, COLOR_BLACK);
+  state = 1;
   while (1)
   {
     if (redrawScreen)
@@ -35,6 +32,7 @@ int main(void)
       redrawScreen = 0;
       update_screen(state);
     }
+    state_advance();
     P1OUT &= ~LED_RED;
     or_sr(0x10);
     P1OUT |= LED_RED;
@@ -47,8 +45,9 @@ void wdt_c_handler()
   if (update_pumpkin)
   {
     count++;
-    if (count == 250)
+    if (count == 1250)
     {
+      update_pumpkin = 0;
       count = 0;
       redrawScreen = 1;
     }
