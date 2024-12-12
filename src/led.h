@@ -6,9 +6,9 @@
 #define LEDS (BIT0 | BIT6)
 
 void led_init();		/* initialize LEDs */
-void siren();
 void both_leds_on();
 void green_led_on();
 void red_led_on();
+void both_leds_off();
 
 #endif // included

@@ -8,40 +8,34 @@
 #include "lcddraw.h"
 #include "lcd_states.h"
 
-int state = 0;
-
-void state_advance()
-{   
+void state_advance(int state)
+{
+    unsigned int newBodyColor;
+    unsigned int newEyeColor;
     switch (state)
     {
     case 1:
-        both_leds_on();
+        update_pumpkin = 0;
+        clearScreen(COLOR_BLACK);
+        green_led_on(); // waits for button to be pressed
+        buzzer_off();
         break;
     case 2:
-        red_led_on();
-        
+        newBodyColor = COLOR_WHITE;
+        newEyeColor = COLOR_CYAN;
+        draw_pumpkin(newBodyColor, newEyeColor);
+        halloween();    // plays halloween song
         break;
     case 3:
-        //wdt handles siren
+        newBodyColor = COLOR_GREEN;
+        newEyeColor = COLOR_AQUAMARINE;
+        draw_pumpkin(newBodyColor, newEyeColor);
+        both_leds_off(); // both leds off
+        halloween_2();   // plays halloween_2 song
         break;
     case 4:
-        green_led_on();
+        update_pumpkin = 0;
+        lcd_siren(); // lcd siren
         break;
-    }
-}
-
-void __interrupt_vec(WDT_VECTOR) WDT()
-{
-    if (state == 3)
-    {
-        lcd_siren_update();
-    }
-    if (state == 4)
-    {
-        halloween_update();
-    }
-    else 
-    {
-        state_advance();
     }
 }

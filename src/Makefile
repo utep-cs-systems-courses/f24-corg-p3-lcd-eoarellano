@@ -22,7 +22,7 @@ all:toy.elf
 
 #additional rules for files
 
-toy.elf: ${COMMON_OBJECTS} main.o switches.o stateMachines.o buzzer.o led.o lcd_states.o ../lib/libTimer.a
+toy.elf: ${COMMON_OBJECTS} main.o switches.o stateMachines.o buzzer.o led.o lcd_states.o wdt_handler.o ../lib/libTimer.a
 
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd
 

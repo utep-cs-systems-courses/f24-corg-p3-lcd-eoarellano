@@ -4,23 +4,9 @@
 #include "lcd_states.h"
 #include "buzzer.h"
 #include "led.h"
+#include "stateMachines.h"
 
-void lcd_start()
-{
-    clearScreen(COLOR_BLUE);
-    drawString5x7(20,20, "Welcome", COLOR_WHITE, COLOR_BLUE);
-    fillRectangle(30, 30, 60, 60, COLOR_BLACK);
-}
-
-void lcd_halloween()
-{
-    clearScreen(COLOR_BLACK);
-    drawString5x7(40,50, "Happy Halloween", COLOR_WHITE, COLOR_ORANGE);
-    fillRectangle(30, 30, 60, 60, COLOR_CYAN);
-}
-
-int lcd_red = 0;
-
+int lcd_red = 1;
 void lcd_siren()
 {
     if (lcd_red)
@@ -38,13 +24,31 @@ void lcd_siren()
     }
 }
 
-void lcd_siren_update()
+void draw_pumpkin(unsigned int newBodyColor, unsigned int newEyeColor)
 {
-  static int count = 0;
-  count++;
-  if (count == 100)
-  {
-    lcd_siren();
-    count = 0;
-  }
+    int centerX = screenWidth / 2;
+    int centerY = screenHeight / 2;
+
+    drawString5x7(20, 40, "SPoOoOOoOoOkY", COLOR_WHITE, COLOR_BLACK);
+
+    // Pumpkin body
+    fillRectangle(centerX - 25, centerY - 25, 50, 50, newBodyColor);
+
+    // Facial features
+    fillRectangle(centerX - 12, centerY + 10, 20, 10, newEyeColor); // Mouth
+    fillRectangle(centerX - 15, centerY - 10, 10, 10, newEyeColor); // Left eye
+    fillRectangle(centerX + 5, centerY - 10, 10, 10, newEyeColor);  // Right eye
+    fillRectangle(centerX - 5, centerY, 10, 10, newEyeColor);       // Nose
+}
+
+unsigned int bodyColor = COLOR_ORANGE;
+unsigned int eyeColor = COLOR_BLACK;
+
+void update_screen(int state)
+{
+    if (state)
+    {
+        update_pumpkin = 1;
+        draw_pumpkin(bodyColor, eyeColor);
+    }
 }

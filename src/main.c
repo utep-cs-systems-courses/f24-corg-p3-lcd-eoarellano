@@ -1,24 +1,57 @@
 #include <msp430.h>
+#include <stdio.h>
 #include <libTimer.h>
-#include "lcdutils.h"
-#include "lcddraw.h"
+#include "led.h"
 #include "switches.h"
 #include "buzzer.h"
-#include "led.h"
+#include "lcdutils.h"
+#include "lcddraw.h"
 #include "stateMachines.h"
+#include "lcd_states.h"
 
-int main()
+extern int redrawScreen;
+int redrawScreen;
+int state;
+int update_pumpkin;
+
+int main(void)
 {
-  P1DIR |= LED_RED;
-  P1OUT |= LED_RED;
-
   configureClocks();
-  switch_init();
-  lcd_init();
   led_init();
+  lcd_init();
+  switch_init();
   buzzer_init();
 
   enableWDTInterrupts();
   or_sr(0x8);
+  // state = 1;
+  // update_pumpkin = 1;
+  clearScreen(COLOR_BLACK);
 
+  while (1)
+  {
+    if (redrawScreen)
+    {
+      redrawScreen = 0;
+      update_screen(state);
+    }
+    P1OUT &= ~LED_RED;
+    or_sr(0x10);
+    P1OUT |= LED_RED;
+  }
+}
+
+void wdt_c_handler()
+{
+  static int count = 0;
+  if (update_pumpkin)
+  {
+    count++;
+    if (count == 250)
+    {
+      count = 0;
+      redrawScreen = 1;
+    }
+  }
+  return;
 }

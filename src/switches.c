@@ -1,8 +1,8 @@
 #include <msp430.h>
 #include "switches.h"
 #include "stateMachines.h"
-
-char switch_state_down;
+#include "led.h"
+#include "buzzer.h"
 
 static char switch_update_interrupt_sense()
 {
@@ -21,7 +21,6 @@ void switch_init()
   switch_update_interrupt_sense();
 }
 
-
 void switch_interrupt_handler()
 {
   char p2val = switch_update_interrupt_sense();
@@ -32,23 +31,19 @@ void switch_interrupt_handler()
 
   if (sw1)
   {
-    state = 1;
-    switch_state_down = 1;
+    state_advance(1);
   }
   else if (sw2)
   {
-    state = 2;
-    switch_state_down = 1;
+    state_advance(2);
   }
   else if (sw3)
   {
-    state = 3;
-    switch_state_down = 1;
+    state_advance(3);
   }
   else if (sw4)
   {
-    state = 4;
-    switch_state_down = 1;
+   state_advance(4);
   }
 }
 

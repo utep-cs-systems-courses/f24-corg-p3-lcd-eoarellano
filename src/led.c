@@ -27,32 +27,7 @@ void green_led_on()
     P1OUT |= LED_GREEN;
     P1OUT &= ~LED_RED;
 }
-
-int led_on = 0;
-
-
-void siren_update()
+void both_leds_off()
 {
-  if (led_on){
-    P1OUT &= ~LED_GREEN;
-    P1OUT |= LED_RED;
-    buzzer_set_period(1000);
-    led_on = 0;
-  }else{
-    P1OUT |= LED_GREEN;
-    P1OUT &= ~LED_RED;
-    buzzer_set_period(2000);
-    led_on = 1;
-  }
-}
-
-void siren()
-{
-  static int count = 0;
-  count++;
-  if (count == 100)
-  {
-    siren_update();
-    count = 0;
-  }
+    P1OUT &= ~LEDS;
 }

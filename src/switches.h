@@ -9,8 +9,5 @@
 #define SWITCHES (SW1 | SW2 | SW3 | SW4)    
 
 void switch_init();
-void swirch_interrupt_handler();
-
-extern char switch_state_down;
 
 #endif // included
