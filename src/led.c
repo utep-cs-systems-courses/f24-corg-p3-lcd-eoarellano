@@ -6,8 +6,6 @@
 void led_init()
 {
     P1DIR |= LEDS;
-    P1OUT &= ~LED_RED;
-    P1OUT &= ~LED_GREEN;
 }
 
 void both_leds_on()

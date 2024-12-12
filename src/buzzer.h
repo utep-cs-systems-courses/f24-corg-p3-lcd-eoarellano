@@ -14,6 +14,6 @@ void buzzer_set_period(short cycles);
 void halloween();
 void halloween_2();
 void buzzer_off();
-void buzzer_starting();
+void buzzerSiren();
 
 #endif // included

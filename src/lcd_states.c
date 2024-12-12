@@ -6,6 +6,7 @@
 #include "led.h"
 #include "stateMachines.h"
 
+int update_pumpkin = 0;
 int lcd_red = 1;
 void lcd_siren()
 {
@@ -29,7 +30,7 @@ void draw_pumpkin(unsigned int newBodyColor, unsigned int newEyeColor)
     int centerX = screenWidth / 2;
     int centerY = screenHeight / 2;
 
-    drawString5x7(20, 40, "SPoOoOOoOoOkY", COLOR_WHITE, COLOR_BLACK);
+    drawString5x7(20, 40, "SPoOoOoOoOoOoOkY", COLOR_WHITE, COLOR_BLACK);
 
     // Pumpkin body
     fillRectangle(centerX - 25, centerY - 25, 50, 50, newBodyColor);

@@ -9,6 +9,6 @@ void lcd_green();
 void draw_pumpkin();
 void update_screen(int state);
 
-extern int orangePumpkin;
+extern int update_pumpkin;
 
 #endif // LCD_STATES_H

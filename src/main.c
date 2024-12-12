@@ -23,6 +23,7 @@ int main(void)
 
   enableWDTInterrupts();
   or_sr(0x8);
+  clearScreen(COLOR_BLACK);
   draw_pumpkin(COLOR_ORANGE, COLOR_BLACK);
   state = 1;
   while (1)

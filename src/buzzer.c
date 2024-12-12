@@ -64,7 +64,7 @@ void buzzer_off()
     CCR1 = 0;
 }
 
-void buzzer_siren()
+void buzzerSiren()
 {
     int i = 5000;
     while(i > 0)
